@@ -88,6 +88,12 @@ else:
 
     # Compute %D (3-day moving average of %K)
     #df["%D"] = df["%K"].rolling(window=3, min_periods=1).mean()
+    #df[["L14", "H14", "%K", "%D"]] = df_reset[["L14", "H14", "%K", "%D"]]
+    df = df.merge(
+            df_reset[["Ticker", "Date", "L14", "H14", "%K", "%D"]],
+             on=["Ticker", "Date"],
+             how="left"
+         )
     print(df_final.head())
     print(df.head())
 
