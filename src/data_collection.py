@@ -86,13 +86,19 @@ else:
     df_reset = df_reset.set_index(["Ticker", "Date"])
     # Compute %K (Stochastic Oscillator)
     #df["%K"] = 100 * ((df["Close"] - df["L14"]) / (df["H14"] - df["L14"] + 1e-9))  # Avoid division by zero
-
+    #print(df_reset.head())
     # Compute %D (3-day moving average of %K)
     #df["%D"] = df["%K"].rolling(window=3, min_periods=1).mean()
     #df[["L14", "H14", "%K", "%D"]] = df_reset[["L14", "H14", "%K", "%D"]]
-
+    # Step 1: Reconstruct the hierarchical columns in df_reset
+    ticker = df_reset.index.get_level_values("Ticker")[0]  # Get the Ticker (e.g., 'AAPL')
+    df_reset.columns = pd.MultiIndex.from_tuples([(ticker, col) for col in df_reset.columns])
+    print(df_reset.head())
     print(df.head())
-    df = df.merge(df_reset[["L14", "H14", "%K", "%D"]], left_index=True, right_index=True, how="left")
+    # Step 2: Merge the new columns into df
+    df = pd.concat([df, df_reset[[(ticker, "L14"), (ticker, "H14"), (ticker, "%K"), (ticker, "%D")]]], axis=1)
+    #print(df.head())
+    #df = df.merge(df_reset[["L14", "H14", "%K", "%D"]], left_index=True, right_index=True, how="left")
     #print(df_final.head())
     print(df.head())
 
