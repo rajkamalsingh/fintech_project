@@ -100,6 +100,7 @@ else:
     #print(df.head())
     #df = df.merge(df_reset[["L14", "H14", "%K", "%D"]], left_index=True, right_index=True, how="left")
     #print(df_final.head())
+
     print(df.head())
 
     # 📌 Average True Range (ATR)
