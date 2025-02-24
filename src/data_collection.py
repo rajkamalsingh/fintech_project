@@ -11,7 +11,11 @@ end_date = "2024-01-01"
 
 # Fetch stock data
 df = yf.download(ticker, start=start_date, end=end_date)
-
+#df.to_csv("data.csv", index=False)
+print(df.head())
+df.columns = df.columns.droplevel(1)  # Drop the first level (Ticker row)
+df= df.reset_index()
+print(df.head())
 # Check if data is available
 if df.empty:
     print("⚠️ No data found for the given stock ticker. Please try again.")
@@ -51,57 +55,17 @@ else:
     df.drop(columns=["Rolling_STD"], inplace=True)
 
     # 📌 Stochastic Oscillator
-
-    # Assuming df is your original DataFrame
-    # Reset the MultiIndex to make Ticker and Date regular columns
-    df_reset = df.reset_index()
-    df_reset.columns = ["_".join(col).strip() for col in df_reset.columns]
-
-    # Step 3: Extract the Ticker (e.g., 'AAPL') from the column names
-    # Example: If columns are ['Date', 'Close_AAPL', 'High_AAPL', ...], extract 'AAPL'
-    ticker = df_reset.columns[1].split("_")[-1]  # Assumes the first column after 'Date' has the ticker
-    df_reset["Ticker"] = ticker  # Add 'Ticker' column
-
-    # Step 4: Rename columns to remove the ticker suffix (e.g., 'Close_AAPL' → 'Close')
-    df_reset.columns = [col.replace(f"_{ticker}", "") for col in df_reset.columns]
-    df_reset.columns = [col.replace(f"_", "") for col in df_reset.columns]
-
-    # Calculate L14 (rolling lowest low) and H14 (rolling highest high)
-    df_reset["L14"] = df_reset["Low"].rolling(window=14, min_periods=1).min()
-    df_reset["H14"] = df_reset["High"].rolling(window=14, min_periods=1).max()
-
-    # Compute %K (Stochastic Oscillator)
-    df_reset["%K"] = 100 * (
-            (df_reset["Close"] - df_reset["L14"]) /
-            (df_reset["H14"] - df_reset["L14"] + 1e-9)  # Avoid division by zero
-    )
-
-    # Compute %D (3-day moving average of %K)
-    df_reset["%D"] = df_reset["%K"].rolling(window=3, min_periods=1).mean()
-    # Inspect the result
-    #print(df_reset[["Date", "Close", "L14", "H14", "%K", "%D"]].head())
-
-    # (Optional) Set index back to MultiIndex
-    print(df_reset.head())
-    df_reset = df_reset.set_index(["Ticker", "Date"])
-    # Compute %K (Stochastic Oscillator)
-    #df["%K"] = 100 * ((df["Close"] - df["L14"]) / (df["H14"] - df["L14"] + 1e-9))  # Avoid division by zero
-    #print(df_reset.head())
-    # Compute %D (3-day moving average of %K)
-    #df["%D"] = df["%K"].rolling(window=3, min_periods=1).mean()
-    #df[["L14", "H14", "%K", "%D"]] = df_reset[["L14", "H14", "%K", "%D"]]
-    # Step 1: Reconstruct the hierarchical columns in df_reset
-    ticker = df_reset.index.get_level_values("Ticker")[0]  # Get the Ticker (e.g., 'AAPL')
-    df_reset.columns = pd.MultiIndex.from_tuples([(ticker, col) for col in df_reset.columns])
-    print(df_reset.head())
-    print(df.head())
-    # Step 2: Merge the new columns into df
-    df = pd.concat([df, df_reset[[(ticker, "L14"), (ticker, "H14"), (ticker, "%K"), (ticker, "%D")]]], axis=1)
-    #print(df.head())
-    #df = df.merge(df_reset[["L14", "H14", "%K", "%D"]], left_index=True, right_index=True, how="left")
-    #print(df_final.head())
+    # Compute rolling lowest low (L14) and highest high (H14)
 
     print(df.head())
+    df["L14"] = df["Low"].rolling(window=14, min_periods=1).min()
+    df["H14"] = df["High"].rolling(window=14, min_periods=1).max()
+    print(df.head())
+    # Compute %K (Stochastic Oscillator)
+    df["%K"] = 100 * ((df["Close"] - df["L14"]) / (df["H14"] - df["L14"] + 1e-9))  # Avoid division by zero
+
+    # Compute %D (3-day moving average of %K)
+    df["%D"] = df["%K"].rolling(window=3, min_periods=1).mean()
 
     # 📌 Average True Range (ATR)
     df["High-Low"] = df["High"] - df["Low"]
@@ -113,6 +77,7 @@ else:
     # 📌 On-Balance Volume (OBV)
     df["OBV"] = (df["Volume"].where(df["Close"] > df["Close"].shift(1), -df["Volume"])).cumsum()
 
+    #print(df.head())
     # Display final dataset
     print(df[["Close", "Volume", "SMA_50", "SMA_200", "MACD", "Signal", "RSI", "BB_Upper", "BB_Lower", "%K", "%D", "ATR", "OBV"]].tail())
 

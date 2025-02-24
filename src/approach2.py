@@ -11,8 +11,11 @@ end_date = "2024-01-01"
 
 # Fetch stock data
 df = yf.download(ticker, start=start_date, end=end_date)
+#df.to_csv("data.csv", index=False)
 print(df.head())
+df.columns = df.columns.droplevel(1)  # Drop the first level (Ticker row)
 df= df.reset_index()
+print(df.head())
 # Check if data is available
 if df.empty:
     print("⚠️ No data found for the given stock ticker. Please try again.")
@@ -52,8 +55,17 @@ else:
     df.drop(columns=["Rolling_STD"], inplace=True)
 
     # 📌 Stochastic Oscillator
+    # Compute rolling lowest low (L14) and highest high (H14)
 
+    print(df.head())
+    df["L14"] = df["Low"].rolling(window=14, min_periods=1).min()
+    df["H14"] = df["High"].rolling(window=14, min_periods=1).max()
+    print(df.head())
+    # Compute %K (Stochastic Oscillator)
+    df["%K"] = 100 * ((df["Close"] - df["L14"]) / (df["H14"] - df["L14"] + 1e-9))  # Avoid division by zero
 
+    # Compute %D (3-day moving average of %K)
+    df["%D"] = df["%K"].rolling(window=3, min_periods=1).mean()
 
     # 📌 Average True Range (ATR)
     df["High-Low"] = df["High"] - df["Low"]
@@ -65,9 +77,9 @@ else:
     # 📌 On-Balance Volume (OBV)
     df["OBV"] = (df["Volume"].where(df["Close"] > df["Close"].shift(1), -df["Volume"])).cumsum()
 
-    print(df.head())
+    #print(df.head())
     # Display final dataset
-    #print(df[["Close", "Volume", "SMA_50", "SMA_200", "MACD", "Signal", "RSI", "BB_Upper", "BB_Lower", "%K", "%D", "ATR", "OBV"]].tail())
+    print(df[["Close", "Volume", "SMA_50", "SMA_200", "MACD", "Signal", "RSI", "BB_Upper", "BB_Lower", "%K", "%D", "ATR", "OBV"]].tail())
 
     # 📊 Plot Closing Price + Bollinger Bands
     plt.figure(figsize=(12, 6))
@@ -102,7 +114,7 @@ else:
     plt.show()
 
     # 📊 Plot Stochastic Oscillator
-    '''plt.figure(figsize=(12, 4))
+    plt.figure(figsize=(12, 4))
     plt.plot(df["%K"], label="%K Line", color="blue")
     plt.plot(df["%D"], label="%D Signal Line", color="orange")
     plt.axhline(80, linestyle="dashed", color="red")  # Overbought
@@ -111,4 +123,4 @@ else:
     plt.ylabel("Stochastic Value")
     plt.title(f"{ticker} Stochastic Oscillator")
     plt.legend()
-    plt.show()'''
+    plt.show()
