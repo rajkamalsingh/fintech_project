@@ -1,9 +1,13 @@
 import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import json
 # Ask user for stock ticker
 ticker = input("Enter the stock ticker (e.g., AAPL for Apple): ").upper()
+
+# Save the ticker to a JSON file
+with open("config.json", "w") as f:
+    json.dump({"stock_ticker": ticker}, f)
 
 # Define date range
 start_date = "2020-01-01"
