@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+
 
 # Load stock ticker from config file
 with open("config.json", "r") as f:
@@ -27,3 +30,17 @@ news_headlines = get_yahoo_finance_news(stock_ticker)
 # Convert to DataFrame
 df_news = pd.DataFrame(news_headlines, columns=["Headline"])
 print(df_news.head())  # Display first few headlines
+
+
+
+# Download VADER lexicon (first-time use)
+nltk.download("vader_lexicon")
+
+# Initialize Sentiment Intensity Analyzer
+sia = SentimentIntensityAnalyzer()
+
+# Compute sentiment scores for each headline
+df_news["Sentiment_Score"] = df_news["Headline"].apply(lambda text: sia.polarity_scores(text)["compound"])
+
+# Display results
+print(df_news.head())
