@@ -44,3 +44,7 @@ df_news["Sentiment_Score"] = df_news["Headline"].apply(lambda text: sia.polarity
 
 # Display results
 print(df_news.head())
+# Save to CSV
+df_news.to_csv("news_sentiment.csv", index=False)
+
+print("✅ News sentiment data saved to news_sentiment.csv")
