@@ -130,6 +130,6 @@ else:
     plt.show()
 
 # Save stock data to CSV
-df_stock.to_csv("stock_data.csv", index=False)
+df.to_csv("stock_data.csv", index=False)
 
 print("✅ Stock price data saved to stock_data.csv")
