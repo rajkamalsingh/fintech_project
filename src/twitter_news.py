@@ -52,3 +52,7 @@ df_sentiment = get_twitter_sentiment_v2(stock_ticker, num_tweets=10)
 print(df_sentiment)
 #for i, tweet in enumerate(tweets, 1):
  #   print(f"{i}. {tweet}")
+# Save to CSV
+df_sentiment.to_csv("twitter_sentiment.csv", index=False)
+
+print("✅ Twitter sentiment data saved to twitter_sentiment.csv")
