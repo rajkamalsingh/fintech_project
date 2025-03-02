@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import json
 import os
 import tweepy
+from datetime import datetime
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 # Load the environment variables from .env
@@ -50,9 +51,16 @@ stock_ticker = config["stock_ticker"]  # Read ticker
 # Example usage
 df_sentiment = get_twitter_sentiment_v2(stock_ticker, num_tweets=10)
 print(df_sentiment)
-#for i, tweet in enumerate(tweets, 1):
- #   print(f"{i}. {tweet}")
-# Save to CSV
-df_sentiment.to_csv("twitter_sentiment.csv", index=False)
+# Assume df_tweets contains sentiment scores
+df_sentiment["Date"] = datetime.today().strftime("%Y-%m-%d")  # Add today's date
 
-print("✅ Twitter sentiment data saved to twitter_sentiment.csv")
+# Define file path
+file_path = "twitter_sentiment.csv"
+
+# Overwrite the file if it exists
+if os.path.exists(file_path):
+    os.remove(file_path)  # Delete the old file
+
+df_sentiment.to_csv(file_path, index=False)
+
+print("✅ Twitter sentiment data saved and overwritten.")

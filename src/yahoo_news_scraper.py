@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import json
 import pandas as pd
 import nltk
+import os
+from datetime import datetime
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 
@@ -45,6 +47,16 @@ df_news["Sentiment_Score"] = df_news["Headline"].apply(lambda text: sia.polarity
 # Display results
 print(df_news.head())
 # Save to CSV
-df_news.to_csv("news_sentiment.csv", index=False)
+# Assume df_news contains sentiment scores
+df_news["Date"] = datetime.today().strftime("%Y-%m-%d")  # Add today's date
 
-print("✅ News sentiment data saved to news_sentiment.csv")
+# Define file path
+file_path = "news_sentiment.csv"
+
+# Overwrite the file if it exists
+if os.path.exists(file_path):
+    os.remove(file_path)  # Delete the old file
+
+df_news.to_csv(file_path, index=False)
+
+print("✅ News sentiment data saved and overwritten.")

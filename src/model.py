@@ -74,3 +74,20 @@ model.save("lstm_stock_model.h5")
 
 print(" Model training complete and saved as lstm_stock_model.h5")
 
+# Make predictions on test set
+y_pred = model.predict(X_test)
+
+# Inverse transform predictions to original scale
+y_pred_rescaled = scaler.inverse_transform(np.concatenate((y_pred, np.zeros((y_pred.shape[0], 2))), axis=1))[:, 0]
+y_test_rescaled = scaler.inverse_transform(np.concatenate((y_test.reshape(-1, 1), np.zeros((y_test.shape[0], 2))), axis=1))[:, 0]
+
+# Plot predictions vs actual prices
+plt.figure(figsize=(12, 6))
+plt.plot(df.index[-len(y_test):], y_test_rescaled, label="Actual Stock Price", color="blue")
+plt.plot(df.index[-len(y_test):], y_pred_rescaled, label="Predicted Stock Price", color="red")
+plt.xlabel("Date")
+plt.ylabel("Stock Price")
+plt.legend()
+plt.title("LSTM Stock Price Prediction vs Actual")
+plt.show()
+
