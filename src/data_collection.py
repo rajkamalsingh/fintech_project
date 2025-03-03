@@ -2,6 +2,7 @@ import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
 import json
+from datetime import datetime, timedelta
 # Ask user for stock ticker
 ticker = input("Enter the stock ticker (e.g., AAPL for Apple): ").upper()
 
@@ -10,8 +11,9 @@ with open("config.json", "w") as f:
     json.dump({"stock_ticker": ticker}, f)
 
 # Define date range
+cutoff_date = datetime.today() - timedelta(weeks=260)
 start_date = "2020-01-01"
-end_date = "2024-01-01"
+end_date = datetime.today()
 
 # Fetch stock data
 df = yf.download(ticker, start=start_date, end=end_date)
