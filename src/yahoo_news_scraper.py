@@ -6,7 +6,7 @@ import nltk
 import os
 from datetime import datetime, timedelta
 from nltk.sentiment import SentimentIntensityAnalyzer
-from stocknews import StockNews
+#from stocknews import StockNews
 
 
 # Load stock ticker from config file
@@ -15,10 +15,10 @@ with open("config.json", "r") as f:
 stock_ticker = config["stock_ticker"]  # Read ticker
 
 
-key = os.getenv("MY_WORLD_TRADING_DATA_KEY")
+'''key = os.getenv("MY_WORLD_TRADING_DATA_KEY")
 stocks = ['AAPL']
 sn = StockNews(stocks, wt_key=key)
-df = sn.summarize()
+df = sn.summarize()'''
 
 # Initialize Sentiment Analyzer
 sia = nltk.sentiment.SentimentIntensityAnalyzer()
