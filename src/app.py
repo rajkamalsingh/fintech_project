@@ -6,19 +6,20 @@ import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
-MODEL_URL = "https://raw.githubusercontent.com/rajkamalsingh/fintech_project/tree/main/src/optimized_lstm_stock_model.h5"
 MODEL_PATH = "optimized_lstm_stock_model.h5"
 
-# ✅ Download model if not available
-if not os.path.exists(MODEL_PATH):
-    print("📥 Downloading model...")
-    response = requests.get(MODEL_URL)
-    with open(MODEL_PATH, "wb") as f:
-        f.write(response.content)
-    print("✅ Model downloaded successfully.")
+# ✅ Auto-reload the latest model
+def load_latest_model():
+    if os.path.exists(MODEL_PATH):
+        return tf.keras.models.load_model(MODEL_PATH)
+    else:
+        print("❌ Model file missing!")
+        return None
+
+model = load_latest_model()
 
 # ✅ Load the model
-model = tf.keras.models.load_model(MODEL_PATH)
+#model = tf.keras.models.load_model(MODEL_PATH)
 
 # ✅ Load stock data
 df = pd.read_csv("final_dataset.csv")
