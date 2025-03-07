@@ -15,6 +15,8 @@ model = tf.keras.models.load_model("optimized_lstm_stock_model.h5")
 @app.get("/predict/{stock_ticker}")
 def predict(stock_ticker: str):
     df = pd.read_csv("final_dataset.csv")
+    df["Date"] = pd.to_datetime(df["Date"])
+    df = df.sort_values(by="Date")  # Ensure chronological order
     if df.empty:
         return {"error": "No stock data found"}
 
