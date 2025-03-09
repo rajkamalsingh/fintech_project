@@ -17,13 +17,19 @@ df_news["Date"] = pd.to_datetime(df_news["Date"])
 #df_twitter = df_twitter.groupby("Date")["Sentiment_Score"].mean().reset_index()
 df_news = df_news.groupby("Date")["News_Sentiment"].mean().reset_index()
 df_news["Date"] = df_news["Date"].dt.tz_localize(None)
+df_news = df_news.sort_values(by="Date")
+df_news["Date"] = df_news["Date"].dt.normalize()
+df_news_aggregated = df_news.groupby("Date").agg({
+    "News_Sentiment": "mean",  # Example: Sum numerical values
+}).reset_index()
+print(df_news_aggregated.head())
 
 # Rename columns for clarity
 #df_twitter.rename(columns={"Sentiment_Score": "Twitter_Sentiment"}, inplace=True)
 #df_news.rename(columns={"Sentiment_Score": "News_Sentiment"}, inplace=True)
 
 # Merge sentiment data with stock prices
-df_final = df_stock.merge(df_news, on="Date", how="left")
+df_final = df_stock.merge(df_news_aggregated, on="Date", how="left")
 #df_final = df_stock.merge(df_twitter, on="Date", how="left")
 #df_final = df_final.merge(df_news, on="Date", how="left")
 
