@@ -54,7 +54,7 @@ def analyze_sentiment(df_news):
         print("⚠️ No news data available for sentiment analysis.")
         return df_news
 
-    df_news["Sentiment_Score"] = df_news["Headline"].apply(lambda text: sia.polarity_scores(text)["compound"])
+    df_news["News_Sentiment"] = df_news["Headline"].apply(lambda text: sia.polarity_scores(text)["compound"])
     return df_news
 
 
