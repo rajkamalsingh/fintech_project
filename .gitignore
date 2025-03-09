@@ -11,4 +11,6 @@ env/
 .vscode/
 .DS_Store
 .env
+
+
 stock.pem
