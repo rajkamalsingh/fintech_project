@@ -19,12 +19,40 @@ stock_ticker = config["stock_ticker"]  # Read ticker
 stocks = ['AAPL']
 sn = StockNews(stocks, wt_key=key)
 df = sn.summarize()'''
+api_key = os.getenv("NEWS_API_KEY")
+url = 'https://newsapi.org/v2/everything'
+params = {
+    'q' : "Apple",
+    'from' : (datetime.now() - timedelta(weeks=52)).strftime('%y-%m-%d'),  #get articles from last 52 weeks
+    'sortBy' : 'relevancy',
+    'apiKey' : api_key,
+    'pageSize' : 100, #maximum number of results per page
+    'language' : 'en'
+}
+#Making the request
+response = requests.get(url, params=params)
+data = response.json()
+
+#Check for errors
+if data['status'] != 'ok':
+    raise Exception(f"NewsaPI error: {data['message']}")
+
+#Extract Articles
+articles = data['articles']
+
+#Convert to DataFrame
+news_data = pd.DataFrame(articles)
+news_data = news_data[['publishedAt', 'title']]
+news_data.columns = ['date', 'headline']
+
+print(news_data.head())
+
 
 # Initialize Sentiment Analyzer
 sia = nltk.sentiment.SentimentIntensityAnalyzer()
 
 # Function to scrape Yahoo Finance news headlines
-def get_yahoo_finance_news(stock_ticker, days=30):
+'''def get_yahoo_finance_news(stock_ticker, days=30):
     base_url = f"https://finance.yahoo.com/quote/{stock_ticker}/news"
     headers = {"User-Agent": "Mozilla/5.0"}
 
@@ -107,4 +135,4 @@ def maintain_historical_news(stock_ticker, days=30):
 # ✅ Main execution
 if __name__ == "__main__":
     maintain_historical_news(stock_ticker, days=30)  # Keeps last 30 days of news
-# Get news headlines for the stock
+# Get news headlines for the stock'''
