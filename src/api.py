@@ -7,11 +7,11 @@ from sklearn.preprocessing import MinMaxScaler
 
 app = FastAPI()
 
-# ✅ Load trained model
+# Load trained model
 model = tf.keras.models.load_model("optimized_lstm_stock_model.h5")
 
 
-# ✅ Predict function
+# Predict function
 @app.get("/predict/{stock_ticker}")
 def predict(stock_ticker: str):
     df = pd.read_csv("final_dataset.csv")
