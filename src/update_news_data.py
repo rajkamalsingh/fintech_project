@@ -1,10 +1,14 @@
+import os
+
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
 import pandas as pd
 import yfinance as yf
 from datetime import datetime
-import json
+import json, requests
 
 #  Load existing dataset
-df = pd.read_csv("final_stock_dataset.csv")
+df = pd.read_csv("news_sentiment.csv")
 
 #  Get today's date
 today = datetime.today().strftime("%Y-%m-%d")
@@ -15,16 +19,75 @@ with open("config.json", "r") as f:
     config = json.load(f)
 stock_ticker = config["stock_ticker"]  # Read ticker
 
-new_data = yf.download(stock_ticker, start=today, end=today)
+def get_news_data():
+    # api_key = os.getenv("NEWS_API_KEY")
+    api_key = '994bde3408734b91b5a38e18bc6ab41a'
+    print(api_key)
+    url = 'https://newsapi.org/v2/everything'
+    params = {
+        'q': "Apple",
+        'from': today,  # get articles from today
+        'sortBy': 'relevancy',
+        'apiKey': api_key,
+        'pageSize': 100,  # maximum number of results per page
+        'language': 'en'
+    }
+    # Making the request
+    response = requests.get(url, params=params)
+    data = response.json()
+    if data['totalResults']==0:
+        print(" No new data available for today.")
+        exit()
+    print(data)
+    # Check for errors
+    if data['status'] != 'ok':
+        raise Exception(f"NewsaPI error: {data['message']}")
+    # Extract Articles
+    articles = data['articles']
+    df_news = pd.DataFrame(articles)
+    df_news = df_news[['publishedAt', 'title']]
+    df_news.columns = ['Date', 'Headline']
+    return df_news
 
-# Process new data
-if not new_data.empty:
-    new_data.reset_index(inplace=True)
-    new_data = new_data[["Date", "Open", "High", "Low", "Close", "Volume"]]
+# Initialize Sentiment Analyzer
+sia = nltk.sentiment.SentimentIntensityAnalyzer()
+# ✅ Function to perform sentiment analysis on news headlines
+def analyze_sentiment(df_news):
+    if df_news.empty:
+        print("No news data available for sentiment analysis.")
+        return df_news
 
-    # Append to dataset
-    df = pd.concat([df, new_data])
-    df.to_csv("stock_data.csv", index=False)
-    print(" Stock data updated successfully!")
-else:
-    print(" No new data available for today.")
+    df_news["News_Sentiment"] = df_news["Headline"].apply(lambda text: sia.polarity_scores(text)["compound"])
+    return df_news
+
+def maintain_historical_news():
+    file_path = "news_sentiment.csv"
+
+    # Load existing news sentiment data if available
+    if os.path.exists(file_path):
+        df_existing = pd.read_csv(file_path)
+        df_existing["Date"] = pd.to_datetime(df_existing["Date"])
+    else:
+        df_existing = pd.DataFrame(columns=["Date", "Headline", "Sentiment_Score"])
+
+    # Scrape new news headlines
+    news_data = get_news_data()
+    # Convert to DataFrame
+
+    #  Perform sentiment analysis
+    news_data = analyze_sentiment(news_data)
+
+    #  Append new data to existing dataset
+    df_combined = pd.concat([df_existing, news_data])
+
+    #  Save updated dataset
+    df_combined.to_csv(file_path, index=False)
+    print(df_combined.tail())  # Show latest entries
+
+
+# Main execution
+if __name__ == "__main__":
+    maintain_historical_news()
+# Get news headlines for the stock'''
+
+
