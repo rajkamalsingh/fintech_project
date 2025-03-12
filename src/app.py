@@ -6,7 +6,7 @@ import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
-MODEL_PATH = "fintech_project\src\optimized_lstm_stock_model.h5"
+MODEL_PATH = "fintech_project/src/optimized_lstm_stock_model.h5"
 
 # ✅ Auto-reload the latest model
 def load_latest_model():
@@ -22,7 +22,7 @@ model = load_latest_model()
 #model = tf.keras.models.load_model(MODEL_PATH)
 
 # ✅ Load stock data
-df = pd.read_csv("fintech_project\src\final_dataset.csv")
+df = pd.read_csv("fintech_project/src/final_dataset.csv")
 df["Date"] = pd.to_datetime(df["Date"])
 df = df.sort_values(by="Date")
 
