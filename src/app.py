@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 MODEL_PATH = os.path.join(os.getcwd(), "optimized_lstm_stock_model.h5")
 DATASET_PATH = os.path.join(os.getcwd(), "final_dataset.csv")
-
+print(MODEL_PATH)
 print(os.path.exists(MODEL_PATH))
 print(os.path.exists(DATASET_PATH))
 print("Current Working Directory:", os.getcwd())
