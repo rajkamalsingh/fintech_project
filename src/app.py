@@ -6,8 +6,12 @@ import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
-MODEL_PATH = "fintech_project/src/optimized_lstm_stock_model.h5"
+MODEL_PATH = os.path.join(os.getcwd(), "optimized_lstm_stock_model.h5")
+DATASET_PATH = os.path.join(os.getcwd(), "final_dataset.csv")
 
+print(os.path.exists(MODEL_PATH))
+print(os.path.exists(DATASET_PATH))
+print("Current Working Directory:", os.getcwd())
 # ✅ Auto-reload the latest model
 def load_latest_model():
     if os.path.exists(MODEL_PATH):
@@ -22,7 +26,7 @@ model = load_latest_model()
 #model = tf.keras.models.load_model(MODEL_PATH)
 
 # ✅ Load stock data
-df = pd.read_csv("fintech_project/src/final_dataset.csv")
+df = pd.read_csv(DATASET_PATH)
 df["Date"] = pd.to_datetime(df["Date"])
 df = df.sort_values(by="Date")
 
