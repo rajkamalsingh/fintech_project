@@ -45,16 +45,16 @@ def predict_next_day():
     return predicted_price
 
 # Streamlit UI
-st.title("📈 Stock Price Prediction App")
+st.title("Stock Price Prediction App")
 st.write("Enter a stock ticker and get the predicted stock price for tomorrow.")
 
 # Predict and display result
 if st.button("Predict Tomorrow's Price"):
     predicted_price = predict_next_day()
-    st.success(f"📊 Predicted Stock Price for Tomorrow: **${predicted_price:.2f}**")
+    st.success(f"Predicted Stock Price for Tomorrow: **${predicted_price:.2f}**")
 
     # Plot actual vs predicted prices
-    st.subheader("📉 Actual vs Predicted Stock Prices")
+    st.subheader("Actual vs Predicted Stock Prices")
     y_pred_scaled = model.predict(df_scaled[-60:].reshape(1, 60, len(features)))
     y_pred = scaler.inverse_transform([[0, 0, 0, y_pred_scaled[0][0], 0]])[0][3]
 
