@@ -48,10 +48,10 @@ def get_news_data():
 
 # Initialize Sentiment Analyzer
 sia = nltk.sentiment.SentimentIntensityAnalyzer()
-# ✅ Function to perform sentiment analysis on news headlines
+#  Function to perform sentiment analysis on news headlines
 def analyze_sentiment(df_news):
     if df_news.empty:
-        print("⚠️ No news data available for sentiment analysis.")
+        print(" No news data available for sentiment analysis.")
         return df_news
 
     df_news["News_Sentiment"] = df_news["Headline"].apply(lambda text: sia.polarity_scores(text)["compound"])
@@ -61,30 +61,30 @@ def analyze_sentiment(df_news):
 def maintain_historical_news():
     file_path = "news_sentiment.csv"
 
-    # ✅ Load existing news sentiment data if available
+    #  Load existing news sentiment data if available
     if os.path.exists(file_path):
         df_existing = pd.read_csv(file_path)
         df_existing["Date"] = pd.to_datetime(df_existing["Date"])
     else:
         df_existing = pd.DataFrame(columns=["Date", "Headline", "Sentiment_Score"])
 
-    # ✅ Scrape new news headlines
+    #  Scrape new news headlines
     news_data = get_news_data()
     # Convert to DataFrame
     #print(news_data.head())
 
-    # ✅ Perform sentiment analysis
+    #  Perform sentiment analysis
     news_data = analyze_sentiment(news_data)
 
-    # ✅ Append new data to existing dataset
+    #  Append new data to existing dataset
     df_combined = pd.concat([df_existing, news_data])
 
-    # ✅ Save updated dataset
+    # Save updated dataset
     df_combined.to_csv(file_path, index=False)
     print(df_combined.tail())  # Show latest entries
 
 
-# ✅ Main execution
+#  Main execution
 if __name__ == "__main__":
     maintain_historical_news()
 # Get news headlines for the stock'''
