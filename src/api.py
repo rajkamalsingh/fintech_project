@@ -5,6 +5,23 @@ import pandas as pd
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler
 
+'''
+# S3 bucket details
+bucket_name = "your-model-bucket"
+model_key = "optimized_lstm_stock_model.h5"
+local_model_path = "/app/model/optimized_lstm_stock_model.h5"
+
+# Ensure local directory exists
+os.makedirs("/app/model", exist_ok=True)
+
+# Download the model from S3
+s3 = boto3.client('s3')
+s3.download_file(bucket_name, model_key, local_model_path)
+
+# Load the model
+from keras.models import load_model
+model = load_model(local_model_path)
+'''
 app = FastAPI()
 
 # Load trained model
