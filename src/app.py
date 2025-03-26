@@ -5,7 +5,7 @@ import pandas as pd
 import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
-
+#need to add code for accessing api
 MODEL_PATH = os.path.join(os.getcwd(), "src/optimized_lstm_stock_model.h5")
 DATASET_PATH = os.path.join(os.getcwd(), "src/final_dataset.csv")
 print(MODEL_PATH)
