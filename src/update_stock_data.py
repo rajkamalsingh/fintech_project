@@ -15,10 +15,12 @@ with open("config.json", "r") as f:
     config = json.load(f)
 stock_ticker = config["stock_ticker"]  # Read ticker
 
-new_data = yf.download(stock_ticker, start=today, end=today)
+new_data = yf.download(stock_ticker, start="2025-03-03",  auto_adjust=True)
 
 # Process new data
 if not new_data.empty:
+    new_data.columns = new_data.columns.droplevel(1)  # Drop the first level (Ticker row)
+    new_data = new_data.reset_index()
     new_data.reset_index(inplace=True)
     new_data = new_data[["Date", "Open", "High", "Low", "Close", "Volume"]]
 
