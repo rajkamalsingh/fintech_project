@@ -32,66 +32,67 @@ if not new_data.empty:
     df = pd.concat([df, new_data], ignore_index=True)
     # df = pd.concat([df, new_data])
     print(df.tail())
-    df.to_csv("stock_data.csv", index=False)
-    print(" Stock data updated successfully!")
-    '''print(new_data.head())
-    new_data["SMA_50"] = new_data["Close"].rolling(window=50).mean()  # 50-day SMA
-    new_data["SMA_200"] = new_data["Close"].rolling(window=200).mean()  # 200-day SMA
+
+
+    #print(new_data.head())
+    df["SMA_50"] = df["Close"].rolling(window=50).mean()  # 50-day SMA
+    df["SMA_200"] = df["Close"].rolling(window=200).mean()  # 200-day SMA
 
     #  MACD
-    new_data["EMA_12"] = new_data["Close"].ewm(span=12, adjust=False).mean()
-    new_data["EMA_26"] = new_data["Close"].ewm(span=26, adjust=False).mean()
-    new_data["MACD"] = new_data["EMA_12"] - new_data["EMA_26"]
-    new_data["Signal"] = new_data["MACD"].ewm(span=9, adjust=False).mean()
+    df["EMA_12"] = df["Close"].ewm(span=12, adjust=False).mean()
+    df["EMA_26"] = df["Close"].ewm(span=26, adjust=False).mean()
+    df["MACD"] = df["EMA_12"] - df["EMA_26"]
+    df["Signal"] = df["MACD"].ewm(span=9, adjust=False).mean()
 
     #  RSI
-    delta = new_data["Close"].diff(1)
+    delta = df["Close"].diff(1)
     gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
     rs = gain / loss
-    new_data["RSI"] = 100 - (100 / (1 + rs))
+    df["RSI"] = 100 - (100 / (1 + rs))
 
     #  Bollinger Bands
     # Calculate 20-day Simple Moving Average (SMA)
-    new_data["SMA_20"] = new_data["Close"].rolling(window=20).mean()
+    df["SMA_20"] = df["Close"].rolling(window=20).mean()
 
     # Calculate rolling standard deviation
-    new_data["Rolling_STD"] = new_data["Close"].rolling(window=20).std()
+    df["Rolling_STD"] = df["Close"].rolling(window=20).std()
 
     # Ensure there are no NaN values before assignment
-    new_data["Rolling_STD"].fillna(0, inplace=True)
+    df["Rolling_STD"].fillna(0, inplace=True)
 
     # Compute Bollinger Bands
-    new_data["BB_Upper"] = new_data["SMA_20"] + (new_data["Rolling_STD"] * 2)
-    new_data["BB_Lower"] = new_data["SMA_20"] - (new_data["Rolling_STD"] * 2)
+    df["BB_Upper"] = df["SMA_20"] + (df["Rolling_STD"] * 2)
+    df["BB_Lower"] = df["SMA_20"] - (df["Rolling_STD"] * 2)
 
     # Drop intermediate column
-    new_data.drop(columns=["Rolling_STD"], inplace=True)
+    df.drop(columns=["Rolling_STD"], inplace=True)
 
     #  Stochastic Oscillator
     # Compute rolling lowest low (L14) and highest high (H14)
-    new_data["L14"] = new_data["Low"].rolling(window=14, min_periods=1).min()
-    new_data["H14"] = new_data["High"].rolling(window=14, min_periods=1).max()
+    df["L14"] = df["Low"].rolling(window=14, min_periods=1).min()
+    df["H14"] = df["High"].rolling(window=14, min_periods=1).max()
     # Compute %K (Stochastic Oscillator)
-    new_data["%K"] = 100 * ((new_data["Close"] - new_data["L14"]) / (new_data["H14"] - new_data["L14"] + 1e-9))  # Avoid division by zero
+    df["%K"] = 100 * ((df["Close"] - df["L14"]) / (df["H14"] - df["L14"] + 1e-9))  # Avoid division by zero
 
     # Compute %D (3-day moving average of %K)
-    new_data["%D"] = new_data["%K"].rolling(window=3, min_periods=1).mean()
+    df["%D"] = df["%K"].rolling(window=3, min_periods=1).mean()
 
     #  Average True Range (ATR)
-    new_data["High-Low"] = new_data["High"] - new_data["Low"]
-    new_data["High-Close"] = abs(new_data["High"] - new_data["Close"].shift(1))
-    new_data["Low-Close"] = abs(new_data["Low"] - new_data["Close"].shift(1))
-    new_data["True Range"] = new_data[["High-Low", "High-Close", "Low-Close"]].max(axis=1)
-    new_data["ATR"] = new_data["True Range"].rolling(window=14).mean()
+    df["High-Low"] = df["High"] - df["Low"]
+    df["High-Close"] = abs(df["High"] - df["Close"].shift(1))
+    df["Low-Close"] = abs(df["Low"] - df["Close"].shift(1))
+    df["True Range"] = df[["High-Low", "High-Close", "Low-Close"]].max(axis=1)
+    df["ATR"] = df["True Range"].rolling(window=14).mean()
 
     #  On-Balance Volume (OBV)
-    new_data["OBV"] = (new_data["Volume"].where(new_data["Close"] > new_data["Close"].shift(1), -new_data["Volume"])).cumsum()
-
+    df["OBV"] = (df["Volume"].where(df["Close"] > df["Close"].shift(1), -df["Volume"])).cumsum()
+    print(df.tail())
     #print(new_data.head())
     # Display final dataset
     #print(new_data[["Close", "Volume", "SMA_50", "SMA_200", "MACD", "Signal", "RSI", "BB_Upper", "BB_Lower", "%K", "%D", "ATR", "OBV"]].tail())
-    '''
+    df.to_csv("stock_data.csv", index=False)
+    print(" Stock data updated successfully!")
 
 else:
     print(" No new data available for today.")

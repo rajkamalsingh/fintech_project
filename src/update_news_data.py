@@ -1,10 +1,9 @@
 import os
-import pytorch
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 import pandas as pd
 import yfinance as yf
-from datetime import datetime
+from datetime import datetime, timedelta
 import json, requests
 
 #  Load existing dataset
@@ -26,7 +25,7 @@ def get_news_data():
     url = 'https://newsapi.org/v2/everything'
     params = {
         'q': "Apple",
-        'from': today,  # get articles from today
+        'from': (datetime.now() - timedelta(days=20)).strftime('%y-%m-%d'),  # get articles from today
         'sortBy': 'relevancy',
         'apiKey': api_key,
         'pageSize': 100,  # maximum number of results per page
@@ -51,7 +50,7 @@ def get_news_data():
 
 # Initialize Sentiment Analyzer
 sia = nltk.sentiment.SentimentIntensityAnalyzer()
-# ✅ Function to perform sentiment analysis on news headlines
+# Function to perform sentiment analysis on news headlines
 def analyze_sentiment(df_news):
     if df_news.empty:
         print("No news data available for sentiment analysis.")

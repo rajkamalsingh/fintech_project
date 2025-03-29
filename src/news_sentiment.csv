@@ -1,64 +1,118 @@
 Date,Headline,Sentiment_Score,News_Sentiment
-2025-02-19T16:02:28Z,Apple launches the iPhone 16E,,0.0
+2025-02-19 16:02:28+00:00,Apple launches the iPhone 16E,,0.0
+2025-02-27 02:00:00+00:00,Apple iPhone 16e Review: Questionable Value,,0.0516
+2025-02-19 16:00:45+00:00,Apple’s first in-house iPhone modem is the C1,,0.0
+2025-02-28 14:21:51+00:00,NHL officials will start wearing Apple Watches on ice,,0.0
+2025-02-19 16:33:11+00:00,"Apple iPhone 16e (2025): Specs, Price, Release Date",,0.0
+2025-02-18 13:00:00+00:00,OnePlus Watch 3: The Battery King of Smartwatches,,0.0
+2025-02-20 20:05:07+00:00,A $599 iPhone 16e is a cruel joke,,-0.3818
+2025-02-14 14:25:37+00:00,Netflix finally decides to play nice and support the Apple TV app,,0.7845
+2025-02-22 23:00:23+00:00,The iOS 18.4 beta brings Matter robot vacuum support,,0.4215
+2025-02-19 17:45:16+00:00,8 important things to know about the iPhone 16E,,0.2023
+2025-03-04 18:29:39+00:00,Apple reportedly challenges the UK’s secretive encryption crackdown,,0.0772
+2025-02-11 22:00:53+00:00,I’m Obsessed With J.D. Vance’s Apple Watch,,-0.1779
+2025-02-27 14:18:58+00:00,Apple AirTag four-packs drop to a new record-low price,,-0.2732
+2025-02-15 11:30:00+00:00,The Official DOGE Website Launch Was a Security Mess,,-0.0258
+2025-03-04 15:46:35+00:00,"Apple 11-inch and 13-inch iPad Air : Price, Specs, Availability",,0.0
+2025-02-11 22:22:59+00:00,The CFPB Work Freeze Is Putting Big Tech Regulations ‘On Ice’,,0.0516
+2025-02-19 20:04:57+00:00,Here’s Everything the iPhone 16e Can’t Do,,0.0
+2025-02-28 22:00:08+00:00,Severance‘s Shifting Perspectives Make Its Fractured Reality Even More Fascinating,,0.5849
+2025-03-03 17:56:14+00:00,Tim Cook Teases New Apple ‘Air’ Products Coming Very Soon,,-0.296
+2025-03-07 18:30:22+00:00,Patricia Arquette Breaks Down Severance‘s Latest Bombshell,,0.0
+2025-03-05 13:10:16+00:00,"Apple AirTag 4-Pack Drops to Below $70 on Amazon, That’s Under $18 Each",,0.1779
+2025-02-26 13:46:40+00:00,Apple’s Dictation App Is Mistaking the Word ‘Racist’ for ‘Trump’,,-0.2732
+2025-02-27 21:15:38+00:00,Apple will let parents share their kids’ ages to limit app access,,0.296
+2025-02-14 19:18:34+00:00,Netflix says its brief Apple TV app integration was a mistake,,-0.34
+2025-02-25 22:21:08+00:00,Apple is fixing a voice dictation bug that substitutes ‘Trump’ for ‘racist’,,0.0
+2025-02-25 16:42:56+00:00,You can get four Apple AirTags for a record low $68,,-0.2732
+2025-02-24 15:25:00+00:00,"Apple designer Susan Kare made 32 new, Mac-inspired, physical icons",,0.0
+2025-02-10 19:42:56+00:00,Apple Could Reveal the $500 iPhone SE This Week,,0.0
+2025-03-05 20:27:12+00:00,Here’s how to preorder Apple’s new MacBook Air and Mac Studio,,0.0
+2025-02-27 01:15:45+00:00,"iPhone 16E review: Eh, it’s alright",,0.25
+2025-02-19 15:40:14+00:00,"Samsung Galaxy Buds3 Pro Just Dropped to $100 With Trade-In, a Steal Compared to AirPods Pro 2",,-0.4939
+2025-03-05 14:34:40+00:00,"Apple’s MacBook Air M4 Is Here, and It Finally Supports 3 Screens at Once",,0.3612
+2025-02-17 13:35:16+00:00,"The M2 Apple MacBook Air Is $400 Off on Amazon for Presidents’ Day, Its Lowest Price Ever",,-0.2263
+2025-03-01 16:00:49+00:00,The Best Gadgets of February 2025,,0.6369
+2025-02-13 17:18:36+00:00,Apple Says It Will Showcase a New ‘Family Member’ That’s Likely the iPhone SE 4,,0.0
+2025-02-14 15:05:16+00:00,"The 2nd Gen Apple Watch SE Just Hit Its Lowest Price in Two Months, Only $169 for Presidents’ Day",,-0.3818
+2025-02-19 20:40:06+00:00,Here’s when and where you can preorder the new iPhone 16E,,0.0
+2025-03-03 17:44:13+00:00,Google brings Gemini widgets to iPhone as it looks to seize on Siri’s weaknesses,,-0.3612
+2025-02-18 17:11:21+00:00,All of Chipolo’s Bluetooth trackers are discounted in sitewide sale,,0.0516
+2025-02-26 13:34:36+00:00,More than 1 billion people are now watching podcasts on YouTube every month,,0.0
+2025-02-19 17:43:22+00:00,How the new iPhone 16E compares to the rest of Apple’s iPhone 16 lineup,,0.0
+2025-02-24 13:40:37+00:00,Apple’s iPhone 17 lineup is looking a little Pixelated,,0.0
+2025-02-28 11:00:22+00:00,Aurzen Zip tri-fold projector review: mirror anything (without DRM),,0.0
+2025-02-19 20:38:54+00:00,Verge staffers react to the iPhone 16E: what we love and don’t love,,0.8555
+2025-03-03 18:55:41+00:00,The iPhone 15 Pro will get Visual Intelligence with iOS 18.4,,0.4767
+2025-03-04 15:27:53+00:00,"What if your phone’s camera was much, much bigger?",,0.0
+2025-03-05 22:23:29+00:00,AI-generated review summaries are coming to Apple’s app store,,0.0
+2025-02-26 11:04:33+00:00,Apple AI tool transcribed the word 'racist' as 'Trump',,0.0
+2025-02-13 20:40:58+00:00,Thousands of Americans Use Sideloading Workaround to Install TikTok on iPhones,,0.0
+2025-02-12 18:03:36+00:00,Apple Releasing Apple TV+ App for Android Smartphones Soon,,0.0
+2025-02-11 14:54:38+00:00,Apple Reportedly 'Passed Over' DeepSeek as Apple Intelligence Partner,,0.4767
+2025-02-11 21:19:23+00:00,Apple Adopting 'Gulf of America' Naming for Apple Maps,,0.0
+2025-02-27 23:44:09+00:00,Rare Apple Prototypes and Apple-1 Go Up for Auction,,0.0
+2025-02-25 13:45:32+00:00,"Amazon Just Slashed Apple AirPods Pro 2 Price, Now Under $200 for a Limited Time",,-0.2732
+2025-03-07 16:53:48+00:00,Samsung Android XR Headset Could Cost as Much as the Apple Vision Pro,,0.25
+2025-02-13 13:15:18+00:00,Apple Slashes Beats Powerbeats Pro to All-Time Low as Pro 2 Rolls Out,,-0.4404
+2025-02-20 19:45:09+00:00,"People Are Sad Apple Killed the Home Button With the iPhone 16e, but I’m Not",,-0.5859
+2025-02-25 17:15:51+00:00,"Tile’s Latest Bluetooth Tracker Hits an All-Time Low, Now Cheaper Than Apple AirTag",,-0.2732
+2025-02-11 22:09:19+00:00,Here's How All Online Maps Are Handling the ‘Gulf of Mexico’ Name Change,,0.0
+2025-02-14 14:25:55+00:00,Elon Musk: agent of chaos,,-0.5719
+2025-02-28 15:03:41+00:00,NHL Collaborating With Apple to Give Referees Apple Watches,,0.0
+2025-02-12 20:00:00+00:00,The Apple TV app is finally available on Android with Apple TV Plus,,0.0
+2025-02-11 15:03:00+00:00,Beats Powerbeats Pro 2 Review: Beating the Best,,0.296
+2025-03-10T00:33:30Z,Six thoughts on Apple’s new M3 iPad Air,,0.0
 2025-02-27T02:00:00Z,Apple iPhone 16e Review: Questionable Value,,0.0516
-2025-02-19T16:00:45Z,Apple’s first in-house iPhone modem is the C1,,0.0
+2025-03-25T15:23:21Z,Apple says it’ll use Apple Maps Look Around photos to train AI,,0.0
 2025-02-28T14:21:51Z,NHL officials will start wearing Apple Watches on ice,,0.0
-2025-02-19T16:33:11Z,"Apple iPhone 16e (2025): Specs, Price, Release Date",,0.0
-2025-02-18T13:00:00Z,OnePlus Watch 3: The Battery King of Smartwatches,,0.0
-2025-02-20T20:05:07Z,A $599 iPhone 16e is a cruel joke,,-0.3818
-2025-02-14T14:25:37Z,Netflix finally decides to play nice and support the Apple TV app,,0.7845
-2025-02-22T23:00:23Z,The iOS 18.4 beta brings Matter robot vacuum support,,0.4215
-2025-02-19T17:45:16Z,8 important things to know about the iPhone 16E,,0.2023
+2025-03-18T21:27:47Z,Apple has revealed a Passwords app vulnerability that lasted for months,,-0.2263
+2025-03-20T21:16:02Z,Apple TV Plus is reportedly losing $1 billion per year,,-0.3818
+2025-03-11T13:00:00Z,"Apple Mac Studio (M4 Max, 2025) Review: Small but Mighty",,0.0
+2025-03-14T12:50:21Z,The fake promise of better Siri,,0.2732
+2025-03-14T10:05:04Z,Apple will soon support encrypted RCS messaging with Android users,,0.4019
+2025-03-24T13:18:11Z,Apple’s AirPods Max with USB-C will soon support lossless audio,,0.4019
 2025-03-04T18:29:39Z,Apple reportedly challenges the UK’s secretive encryption crackdown,,0.0772
-2025-02-11T22:00:53Z,I’m Obsessed With J.D. Vance’s Apple Watch,,-0.1779
 2025-02-27T14:18:58Z,Apple AirTag four-packs drop to a new record-low price,,-0.2732
-2025-02-15T11:30:00Z,The Official DOGE Website Launch Was a Security Mess,,-0.0258
 2025-03-04T15:46:35Z,"Apple 11-inch and 13-inch iPad Air : Price, Specs, Availability",,0.0
-2025-02-11T22:22:59Z,The CFPB Work Freeze Is Putting Big Tech Regulations ‘On Ice’,,0.0516
-2025-02-19T20:04:57Z,Here’s Everything the iPhone 16e Can’t Do,,0.0
+2025-03-11T13:00:00Z,"Apple MacBook Air (13-Inch, M4) Review: More Power For Less Money",,0.0
+2025-03-24T19:58:41Z,Apple’s iOS 18.4 update with AI-powered Priority Notifications is almost here,,0.0
+2025-03-11T23:42:01Z,"15-inch MacBook Air (M4, 2025) Review: Bluer and Better",,0.4404
 2025-02-28T22:00:08Z,Severance‘s Shifting Perspectives Make Its Fractured Reality Even More Fascinating,,0.5849
 2025-03-03T17:56:14Z,Tim Cook Teases New Apple ‘Air’ Products Coming Very Soon,,-0.296
-2025-03-07T18:30:22Z,Patricia Arquette Breaks Down Severance‘s Latest Bombshell,,0.0
 2025-03-05T13:10:16Z,"Apple AirTag 4-Pack Drops to Below $70 on Amazon, That’s Under $18 Each",,0.1779
-2025-02-26T13:46:40Z,Apple’s Dictation App Is Mistaking the Word ‘Racist’ for ‘Trump’,,-0.2732
+2025-03-07T18:30:22Z,Patricia Arquette Breaks Down Severance‘s Latest Bombshell,,0.0
+2025-03-11T14:45:47Z,"The New Apple iPad Air Pre-Orders Just Got More Tempting, Amazon’s Already Slashing Prices",,-0.2732
 2025-02-27T21:15:38Z,Apple will let parents share their kids’ ages to limit app access,,0.296
-2025-02-14T19:18:34Z,Netflix says its brief Apple TV app integration was a mistake,,-0.34
-2025-02-25T22:21:08Z,Apple is fixing a voice dictation bug that substitutes ‘Trump’ for ‘racist’,,0.0
-2025-02-25T16:42:56Z,You can get four Apple AirTags for a record low $68,,-0.2732
-2025-02-24T15:25:00Z,"Apple designer Susan Kare made 32 new, Mac-inspired, physical icons",,0.0
-2025-02-10T19:42:56Z,Apple Could Reveal the $500 iPhone SE This Week,,0.0
+2025-03-10T19:34:50Z,"Apple is reportedly planning a design overhaul for iOS, iPadOS, and macOS",,0.0
+2025-03-21T15:46:04Z,Opening iOS is good news for smartwatches,,0.4404
+2025-03-10T12:40:50Z,"Apple Watch Series 10 Just Hit Its Lowest Price Since Launch, $100 Off on Amazon for a Limited Time",,-0.4215
+2025-03-14T14:40:48Z,Ford hires a Twitch and PlayStation veteran to run its digital services,,0.0
+2025-03-24T16:00:11Z,20 Questions We Have After Severance Season 2,,0.0
+2025-03-24T17:45:43Z,"Severance Season 3 Might Be Something Totally Different, but Probably Not",,0.0
 2025-03-05T20:27:12Z,Here’s how to preorder Apple’s new MacBook Air and Mac Studio,,0.0
 2025-02-27T01:15:45Z,"iPhone 16E review: Eh, it’s alright",,0.25
-2025-02-19T15:40:14Z,"Samsung Galaxy Buds3 Pro Just Dropped to $100 With Trade-In, a Steal Compared to AirPods Pro 2",,-0.4939
+2025-03-12T13:53:27Z,All this bad AI is wrecking a whole generation of gadgets,,-0.5423
 2025-03-05T14:34:40Z,"Apple’s MacBook Air M4 Is Here, and It Finally Supports 3 Screens at Once",,0.3612
-2025-02-17T13:35:16Z,"The M2 Apple MacBook Air Is $400 Off on Amazon for Presidents’ Day, Its Lowest Price Ever",,-0.2263
+2025-03-14T21:00:33Z,All the Severance Questions We Still Have Ahead of the Season Finale,,0.0
 2025-03-01T16:00:49Z,The Best Gadgets of February 2025,,0.6369
-2025-02-13T17:18:36Z,Apple Says It Will Showcase a New ‘Family Member’ That’s Likely the iPhone SE 4,,0.0
-2025-02-14T15:05:16Z,"The 2nd Gen Apple Watch SE Just Hit Its Lowest Price in Two Months, Only $169 for Presidents’ Day",,-0.3818
-2025-02-19T20:40:06Z,Here’s when and where you can preorder the new iPhone 16E,,0.0
+2025-03-19T16:15:38Z,8 TV Shows and Movies to Watch After You Finish Severance,,0.0
 2025-03-03T17:44:13Z,Google brings Gemini widgets to iPhone as it looks to seize on Siri’s weaknesses,,-0.3612
-2025-02-18T17:11:21Z,All of Chipolo’s Bluetooth trackers are discounted in sitewide sale,,0.0516
-2025-02-26T13:34:36Z,More than 1 billion people are now watching podcasts on YouTube every month,,0.0
-2025-02-19T17:43:22Z,How the new iPhone 16E compares to the rest of Apple’s iPhone 16 lineup,,0.0
-2025-02-24T13:40:37Z,Apple’s iPhone 17 lineup is looking a little Pixelated,,0.0
-2025-02-28T11:00:22Z,Aurzen Zip tri-fold projector review: mirror anything (without DRM),,0.0
-2025-02-19T20:38:54Z,Verge staffers react to the iPhone 16E: what we love and don’t love,,0.8555
-2025-03-03T18:55:41Z,The iPhone 15 Pro will get Visual Intelligence with iOS 18.4,,0.4767
 2025-03-04T15:27:53Z,"What if your phone’s camera was much, much bigger?",,0.0
+2025-02-28T11:00:22Z,Aurzen Zip tri-fold projector review: mirror anything (without DRM),,0.0
+2025-03-03T18:55:41Z,The iPhone 15 Pro will get Visual Intelligence with iOS 18.4,,0.4767
+2025-03-12T17:10:43Z,Moft’s new origami case elevates the iPad for improved ergonomics,,0.4767
+2025-03-09T21:08:43Z,Here’s what the newest iPhone Air leaks say about its design,,0.0
 2025-03-05T22:23:29Z,AI-generated review summaries are coming to Apple’s app store,,0.0
-2025-02-26T11:04:33Z,Apple AI tool transcribed the word 'racist' as 'Trump',,0.0
-2025-02-13T20:40:58Z,Thousands of Americans Use Sideloading Workaround to Install TikTok on iPhones,,0.0
-2025-02-12T18:03:36Z,Apple Releasing Apple TV+ App for Android Smartphones Soon,,0.0
-2025-02-11T14:54:38Z,Apple Reportedly 'Passed Over' DeepSeek as Apple Intelligence Partner,,0.4767
-2025-02-11T21:19:23Z,Apple Adopting 'Gulf of America' Naming for Apple Maps,,0.0
+2025-03-20T14:00:11Z,"The beautiful, retro tech of two theatrical sound designers",,0.5994
+2025-03-27T16:43:39Z,iPhone users can now set WhatsApp as their default calling and texting app,,0.0
 2025-02-27T23:44:09Z,Rare Apple Prototypes and Apple-1 Go Up for Auction,,0.0
-2025-02-25T13:45:32Z,"Amazon Just Slashed Apple AirPods Pro 2 Price, Now Under $200 for a Limited Time",,-0.2732
+2025-03-20T22:18:10Z,Apple Facing False Advertising Lawsuit Over Apple Intelligence Delay,,-0.0258
+2025-03-20T11:10:20Z,"Ditch Your Apple Watch, The Galaxy Watch Ultra Is Now 50% Off on Samsung’s Store",,0.0
 2025-03-07T16:53:48Z,Samsung Android XR Headset Could Cost as Much as the Apple Vision Pro,,0.25
-2025-02-13T13:15:18Z,Apple Slashes Beats Powerbeats Pro to All-Time Low as Pro 2 Rolls Out,,-0.4404
-2025-02-20T19:45:09Z,"People Are Sad Apple Killed the Home Button With the iPhone 16e, but I’m Not",,-0.5859
-2025-02-25T17:15:51Z,"Tile’s Latest Bluetooth Tracker Hits an All-Time Low, Now Cheaper Than Apple AirTag",,-0.2732
-2025-02-11T22:09:19Z,Here's How All Online Maps Are Handling the ‘Gulf of Mexico’ Name Change,,0.0
-2025-02-14T14:25:55Z,Elon Musk: agent of chaos,,-0.5719
+2025-03-17T20:25:01Z,"Beats Studio Buds Now Just $99, the Best Apple Alternative to AirPods on a Budget",,0.6369
+2025-03-10T21:00:00Z,This Is the Year Apple and Samsung Will Compete for the Title of Thinnest Smartphone,,0.0
+2025-03-14T18:50:13Z,House GOP subpoenas Big Tech for evidence that Biden made AI woke,,0.0
+2025-03-21T13:27:50Z,Trump’s confusing crusade against Big Tech,,-0.2263
+2025-03-16T14:20:17Z,The iPhone 17 Air makes other models look chunky in new leaked dummy shots,,-0.3182
 2025-02-28T15:03:41Z,NHL Collaborating With Apple to Give Referees Apple Watches,,0.0
-2025-02-12T20:00:00Z,The Apple TV app is finally available on Android with Apple TV Plus,,0.0
-2025-02-11T15:03:00Z,Beats Powerbeats Pro 2 Review: Beating the Best,,0.296

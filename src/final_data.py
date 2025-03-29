@@ -44,5 +44,5 @@ if os.path.exists(final_file_path):
 
 df_final.to_csv(final_file_path, index=False)
 
-print("✅ Final dataset saved as final_stock_dataset.csv")
+print("Final dataset saved as final_stock_dataset.csv")
 print(df_stock.head())  # Preview the dataset
