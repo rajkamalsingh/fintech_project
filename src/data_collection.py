@@ -13,7 +13,7 @@ with open("config.json", "w") as f:
 # Define date range
 cutoff_date = datetime.today() - timedelta(weeks=260)
 start_date = "2020-01-01"
-end_date = datetime.today()
+end_date = "2025-03-01"
 
 # Fetch stock data
 df = yf.download(ticker, start=start_date, end=end_date)
@@ -26,24 +26,24 @@ print(df.head())
 if df.empty:
     print("⚠️ No data found for the given stock ticker. Please try again.")
 else:
-    # 📌 Moving Averages
+    #  Moving Averages
     df["SMA_50"] = df["Close"].rolling(window=50).mean()  # 50-day SMA
     df["SMA_200"] = df["Close"].rolling(window=200).mean()  # 200-day SMA
 
-    # 📌 MACD
+    #  MACD
     df["EMA_12"] = df["Close"].ewm(span=12, adjust=False).mean()
     df["EMA_26"] = df["Close"].ewm(span=26, adjust=False).mean()
     df["MACD"] = df["EMA_12"] - df["EMA_26"]
     df["Signal"] = df["MACD"].ewm(span=9, adjust=False).mean()
 
-    # 📌 RSI
+    #  RSI
     delta = df["Close"].diff(1)
     gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
     rs = gain / loss
     df["RSI"] = 100 - (100 / (1 + rs))
 
-    # 📌 Bollinger Bands
+    #  Bollinger Bands
     # Calculate 20-day Simple Moving Average (SMA)
     df["SMA_20"] = df["Close"].rolling(window=20).mean()
 
@@ -60,7 +60,7 @@ else:
     # Drop intermediate column (optional)
     df.drop(columns=["Rolling_STD"], inplace=True)
 
-    # 📌 Stochastic Oscillator
+    #  Stochastic Oscillator
     # Compute rolling lowest low (L14) and highest high (H14)
 
     print(df.head())
@@ -73,21 +73,21 @@ else:
     # Compute %D (3-day moving average of %K)
     df["%D"] = df["%K"].rolling(window=3, min_periods=1).mean()
 
-    # 📌 Average True Range (ATR)
+    #  Average True Range (ATR)
     df["High-Low"] = df["High"] - df["Low"]
     df["High-Close"] = abs(df["High"] - df["Close"].shift(1))
     df["Low-Close"] = abs(df["Low"] - df["Close"].shift(1))
     df["True Range"] = df[["High-Low", "High-Close", "Low-Close"]].max(axis=1)
     df["ATR"] = df["True Range"].rolling(window=14).mean()
 
-    # 📌 On-Balance Volume (OBV)
+    #  On-Balance Volume (OBV)
     df["OBV"] = (df["Volume"].where(df["Close"] > df["Close"].shift(1), -df["Volume"])).cumsum()
 
     #print(df.head())
     # Display final dataset
     print(df[["Close", "Volume", "SMA_50", "SMA_200", "MACD", "Signal", "RSI", "BB_Upper", "BB_Lower", "%K", "%D", "ATR", "OBV"]].tail())
 
-    # 📊 Plot Closing Price + Bollinger Bands
+    #  Plot Closing Price + Bollinger Bands
     plt.figure(figsize=(12, 6))
     plt.plot(df["Close"], label="Closing Price", color="blue", alpha=0.5)
     plt.plot(df["BB_Upper"], label="Bollinger Upper", linestyle="dashed", color="red")
@@ -98,7 +98,7 @@ else:
     plt.legend()
     plt.show()
 
-    # 📊 Plot RSI
+    #  Plot RSI
     plt.figure(figsize=(12, 4))
     plt.plot(df["RSI"], label="RSI", color="brown")
     plt.axhline(70, linestyle="dashed", color="red")  # Overbought threshold
@@ -109,7 +109,7 @@ else:
     plt.legend()
     plt.show()
 
-    # 📊 Plot MACD
+    #  Plot MACD
     plt.figure(figsize=(12, 6))
     plt.plot(df["MACD"], label="MACD", color="purple")
     plt.plot(df["Signal"], label="Signal Line", color="orange")
@@ -119,7 +119,7 @@ else:
     plt.legend()
     plt.show()
 
-    # 📊 Plot Stochastic Oscillator
+    #  Plot Stochastic Oscillator
     plt.figure(figsize=(12, 4))
     plt.plot(df["%K"], label="%K Line", color="blue")
     plt.plot(df["%D"], label="%D Signal Line", color="orange")
@@ -134,4 +134,4 @@ else:
 # Save stock data to CSV
 df.to_csv("stock_data.csv", index=False)
 
-print("✅ Stock price data saved to stock_data.csv")
+print("Stock price data saved to stock_data.csv")
