@@ -11,11 +11,14 @@ df_stock = df_stock.sort_values(by="Date")
 
 # Load News Sentiment Data
 df_news = pd.read_csv("news_sentiment.csv")
-df_news["Date"] = pd.to_datetime(df_news["Date"])
+df_news["Date"] = pd.to_datetime(df_news["Date"],format='mixed', utc=True)
+df_news["Date"] = df_news["Date"].dt.strftime("%Y-%m-%d %H:%M:%S+00:00")
 
 # Aggregate daily sentiment scores (mean score per day)
 #df_twitter = df_twitter.groupby("Date")["Sentiment_Score"].mean().reset_index()
 df_news = df_news.groupby("Date")["News_Sentiment"].mean().reset_index()
+print(df_news.tail())
+df_news["Date"] = pd.to_datetime(df_news["Date"])
 df_news["Date"] = df_news["Date"].dt.tz_localize(None)
 df_news = df_news.sort_values(by="Date")
 df_news["Date"] = df_news["Date"].dt.normalize()

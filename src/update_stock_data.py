@@ -15,7 +15,7 @@ with open("config.json", "r") as f:
     config = json.load(f)
 stock_ticker = config["stock_ticker"]  # Read ticker
 
-new_data = yf.download(stock_ticker, start="2025-03-03",  auto_adjust=True)
+new_data = yf.download(stock_ticker, start=today,  auto_adjust=True)
 
 # Process new data
 if not new_data.empty:
