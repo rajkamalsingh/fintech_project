@@ -25,7 +25,7 @@ def get_news_data():
     url = 'https://newsapi.org/v2/everything'
     params = {
         'q': "Apple",
-        'from': (datetime.now() - timedelta(days=20)).strftime('%y-%m-%d'),  # get articles from today
+        'from': today,  # get articles from today
         'sortBy': 'relevancy',
         'apiKey': api_key,
         'pageSize': 100,  # maximum number of results per page
@@ -66,11 +66,14 @@ def maintain_historical_news():
     if os.path.exists(file_path):
         df_existing = pd.read_csv(file_path)
         df_existing["Date"] = pd.to_datetime(df_existing["Date"])
+        #df_existing["Date"] = df_existing["Date"].dt.strftime("%Y-%m-%d %H:%M:%S+00:00")
     else:
         df_existing = pd.DataFrame(columns=["Date", "Headline", "Sentiment_Score"])
 
     # Scrape new news headlines
     news_data = get_news_data()
+    news_data["Date"] = pd.to_datetime(news_data["Date"], format='mixed', utc=True)
+    news_data["Date"] = news_data["Date"].dt.strftime("%Y-%m-%d %H:%M:%S+00:00")
     # Convert to DataFrame
 
     #  Perform sentiment analysis
