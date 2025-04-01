@@ -8,14 +8,14 @@ df = pd.read_csv("stock_data.csv")
 
 #  Get today's date
 today = datetime.today().strftime("%Y-%m-%d")
-
+start_date = "2025-03-31"
 #  Fetch latest stock data
 # Load stock ticker from config file
 with open("config.json", "r") as f:
     config = json.load(f)
 stock_ticker = config["stock_ticker"]  # Read ticker
 
-new_data = yf.download(stock_ticker, start=today,  auto_adjust=True)
+new_data = yf.download(stock_ticker, start=start_date,  auto_adjust=True)
 
 # Process new data
 if not new_data.empty:
@@ -27,7 +27,6 @@ if not new_data.empty:
     new_data = new_data.iloc[1:]
 
     # Now concatenate df2_data with df1
-    print(df.tail())
     df['Date'] = pd.to_datetime(df['Date'])
     df = pd.concat([df, new_data], ignore_index=True)
     # df = pd.concat([df, new_data])

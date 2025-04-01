@@ -25,7 +25,7 @@ def get_news_data():
     url = 'https://newsapi.org/v2/everything'
     params = {
         'q': "Apple",
-        'from': today,  # get articles from today
+        'from': (datetime.now() - timedelta(days=2)).strftime('%y-%m-%d'),  # get articles from today
         'sortBy': 'relevancy',
         'apiKey': api_key,
         'pageSize': 100,  # maximum number of results per page
