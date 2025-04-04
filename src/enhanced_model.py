@@ -81,3 +81,20 @@ model.compile(optimizer = optimizer, loss = 'mse', metrics = ['mae'])
 
 # Train the model
 history = model.fit(x_train, y_train, epochs=200, batch_size = 32, validation_data = (x_test,y_test), verbose=1)
+
+# Evaluate the model
+loss, mae = model.evaluate(x_test, y_test)
+print(f'Test loss:{loss}, Test mae: {mae}')
+
+# save the model
+model.save('enhanced_lstm_stock-model.h5')
+
+
+# model prediction and visualization
+y_pred = model.predict(x_test)
+
+# inverse scale predictions
+y_pred_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_pred.reshape(-1,1)), axis =1))[:,-1]
+y_test_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_test.reshape(-1,1)), axis =1))[:,-1]
+
+# Plot predictions v/s actual price
