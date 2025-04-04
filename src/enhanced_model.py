@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 from Scripts.pywin32_postinstall import verbose
+from scipy.ndimage import label
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout, Bidirectional, Attention, Input, LayerNormalization
 from tensorflow.keras.optimizers import Adam
@@ -98,3 +99,11 @@ y_pred_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_pred.res
 y_test_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_test.reshape(-1,1)), axis =1))[:,-1]
 
 # Plot predictions v/s actual price
+plt.figure(figsize=(12,6))
+plt.plot(y_test_inv, label='Actual Price', color = 'blue')
+plt.plot(y_pred_inv, label='Predicted Price', color = 'red')
+plt.title('Stock price prediction with enhanced model')
+plt.xlabel('Time')
+plt.ylabel('Price')
+plt.legend()
+plt.show()
