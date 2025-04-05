@@ -90,6 +90,7 @@ if not new_data.empty:
     #print(new_data.head())
     # Display final dataset
     #print(new_data[["Close", "Volume", "SMA_50", "SMA_200", "MACD", "Signal", "RSI", "BB_Upper", "BB_Lower", "%K", "%D", "ATR", "OBV"]].tail())
+    df = df.fillna(0)
     df.to_csv("stock_data.csv", index=False)
     print(" Stock data updated successfully!")
 

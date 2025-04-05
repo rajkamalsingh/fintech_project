@@ -19,58 +19,67 @@ data = pd.read_csv('final_dataset.csv')
 # Select relevant features
 features = ['Open', 'High', 'Low', 'Close', 'Volume', 'News_Sentiment', 'SMA_50', 'SMA_200', 'RSI', '%K', 'BB_Upper', 'BB_Lower', 'ATR', 'MACD', 'OBV', 'Signal']
 data = data[features]
-
+#print(data.head())
+#print(data.std())
 # Scale the data
 scaler = MinMaxScaler()
 scaled_data = scaler.fit_transform(data)
 
-
+x,y =[],[]
 # Preparing sequence for LSTM
 def create_sequence(data, sequence_length=60):
-    x,y =[],[]
+
     for i in range (len(data)-sequence_length):
-        x.append(data[i:i+sequence_length])
-        y.append(data[i+sequence_length, 3]) #focusing on close price
+        x.append(data[i : i + sequence_length])
+        y.append(data[i + sequence_length, 3]) #focusing on close price
     return np.array(x), np.array(y)
 
 sequence_length =60
-x,y = create_sequence(data,sequence_length)
-
+x,y = create_sequence(scaled_data,sequence_length)
+print(np.isnan(x).sum(), np.isinf(x).sum())
+print(np.isnan(y).sum(), np.isinf(y).sum())
+print("Target Std Dev:", np.std(y))
+print("y min:", np.min(y))
+print("y max:", np.max(y))
 # Split into train and test data
 x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.2, shuffle=False)
 
 #-----------------------------------
 # Building LSTM model
-model = Sequential()
+inputs = Input(shape=(x_train.shape[1], x_train.shape[2]))
+
+#model = Sequential()
 
 # Bidirectional LSTM layer 1
-model.add(Bidirectional(LSTM(128, return_sequences = True, activation = 'relu'),input_shape=(x_train.shape[1], x_train.shape[2])))
-model.add(Dropout(0.3))
+m = Bidirectional(LSTM(128, return_sequences = True, activation = 'relu'))(inputs)
+m=Dropout(0.3)(m)
+
 
 # Bidirectional LSTM layer 2
-model.add(Bidirectional(LSTM(64, return_sequences = True)))
-model.add(Dropout(0.3))
+m = Bidirectional(LSTM(64, return_sequences = True))(m)
+m = Dropout(0.3)(m)
 
 # Attention mechanism
-query = Dense(64)(x_train)
-value = Dense(64)(x_train)
-attention_output = Attention()([query,value])
+#query = Dense(64)(x_train)
+#value = Dense(64)(x_train)
+attention_output = Attention()([m,m])
 
 # Layer normalization
 attention_output = LayerNormalization()(attention_output)
 
 # LSTM layer with attention
-lstm_out = LSTM(100, return_sequences = False)(attention_output)
-dropout = Dropout(0.3)(lstm_out)
+m = LSTM(100, return_sequences = False)(attention_output)
+m = Dropout(0.3)(m)
 
 # output layer
-output = Dense(1)(dropout)
-model = tf.keras.Model(inputs = model.input, outputs = output)
+output = Dense(1)(m)
+
+model = tf.keras.Model(inputs,output)
 
 #-----------------------------
 
 # Optimizer with learning rate scheduler
-initial_learning_rate = 0.001
+initial_learning_rate = 0.0005
 lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
     initial_learning_rate, decay_steps=10000, decay_rate = 0.9, staircase = True
 )
@@ -79,9 +88,9 @@ lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
 optimizer = Adam(learning_rate = lr_schedule)
 model.compile(optimizer = optimizer, loss = 'mse', metrics = ['mae'])
 
-
+'''
 # Train the model
-history = model.fit(x_train, y_train, epochs=200, batch_size = 32, validation_data = (x_test,y_test), verbose=1)
+history = model.fit(x_train, y_train, epochs=200, batch_size = 32, validation_data = (x_test,y_test), verbose=2)
 
 # Evaluate the model
 loss, mae = model.evaluate(x_test, y_test)
@@ -107,3 +116,4 @@ plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
 plt.show()
+'''
