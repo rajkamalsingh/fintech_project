@@ -10,6 +10,11 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from tensorflow.python.keras.saving.saved_model_experimental import sequential
+import sys
+
+if not hasattr(sys.stdout, "encoding") or sys.stdout.encoding is None:
+    sys.stdout.encoding = "utf-8"
+
 
 # ------------------------------
 # Load Data
@@ -19,6 +24,7 @@ data = pd.read_csv('final_dataset.csv')
 # Select relevant features
 features = ['Open', 'High', 'Low', 'Close', 'Volume', 'News_Sentiment', 'SMA_50', 'SMA_200', 'RSI', '%K', 'BB_Upper', 'BB_Lower', 'ATR', 'MACD', 'OBV', 'Signal']
 data = data[features]
+print(data.columns.get_loc('Close'))
 #print(data.head())
 #print(data.std())
 # Scale the data
@@ -88,7 +94,7 @@ lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
 optimizer = Adam(learning_rate = lr_schedule)
 model.compile(optimizer = optimizer, loss = 'mse', metrics = ['mae'])
 
-'''
+
 # Train the model
 history = model.fit(x_train, y_train, epochs=200, batch_size = 32, validation_data = (x_test,y_test), verbose=2)
 
@@ -104,8 +110,22 @@ model.save('enhanced_lstm_stock-model.h5')
 y_pred = model.predict(x_test)
 
 # inverse scale predictions
-y_pred_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_pred.reshape(-1,1)), axis =1))[:,-1]
-y_test_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_test.reshape(-1,1)), axis =1))[:,-1]
+#y_pred_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_pred.reshape(-1,1)), axis =1))[:,-1]
+#y_test_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_test.reshape(-1,1)), axis =1))[:,-1]
+# Step 1: Create a dummy array with same number of features (16)
+dummy_input = np.zeros((len(y_pred), scaler.data_min_.shape[0]))  # shape (253, 16)
+
+# Step 2: Insert the predicted values into the column corresponding to 'close' price (e.g., column index 5 if it's 6th)
+# Replace 5 with the actual index of 'close' used during feature scaling
+dummy_input[:, 3] = y_pred.reshape(-1)
+
+# Step 3: Inverse transform and extract the predicted 'close' price
+y_pred_inv = scaler.inverse_transform(dummy_input)[:, 3]
+
+# Similarly for y_test
+dummy_input[:, 3] = y_test.reshape(-1)
+y_test_inv = scaler.inverse_transform(dummy_input)[:, 3]
+
 
 # Plot predictions v/s actual price
 plt.figure(figsize=(12,6))
@@ -116,4 +136,3 @@ plt.xlabel('Time')
 plt.ylabel('Price')
 plt.legend()
 plt.show()
-'''
