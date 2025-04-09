@@ -13,7 +13,7 @@ day_number = today_2.weekday()
 print(day_number)
 if day_number in range(0,5):
     print("hello")
-    start_date = "2025-04-04"
+    start_date = "2025-04-05"
     #  Fetch latest stock data
     # Load stock ticker from config file
     with open("config.json", "r") as f:
@@ -96,7 +96,7 @@ if day_number in range(0,5):
         # Display final dataset
         #print(new_data[["Close", "Volume", "SMA_50", "SMA_200", "MACD", "Signal", "RSI", "BB_Upper", "BB_Lower", "%K", "%D", "ATR", "OBV"]].tail())
         df = df.fillna(0)
-        #df.to_csv("stock_data.csv", index=False)
+        df.to_csv("stock_data.csv", index=False)
         print(" Stock data updated successfully!")
 
     else:
