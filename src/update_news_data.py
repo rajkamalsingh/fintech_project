@@ -49,6 +49,15 @@ def get_news_data():
     return df_news
 
 # Initialize Sentiment Analyzer
+'''
+# used for docker on ec2 as python is installed on docker and not ec2
+# Set the NLTK data directory to the mounted volume inside the container
+nltk.data.path.append("/app/data/nltk_data")  # Replace with the correct path based on your mount
+
+# Download vader_lexicon to the mounted volume
+if not os.path.exists("/app/data/nltk_data/vader_lexicon"):
+    nltk.download('vader_lexicon', download_dir='/app/data/nltk_data')
+'''
 sia = nltk.sentiment.SentimentIntensityAnalyzer()
 # Function to perform sentiment analysis on news headlines
 def analyze_sentiment(df_news):
