@@ -6,8 +6,8 @@ import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 #need to add code for accessing api
-MODEL_PATH = os.path.join(os.getcwd(), "src/optimized_lstm_stock_model.h5")
-DATASET_PATH = os.path.join(os.getcwd(), "src/final_dataset.csv")
+MODEL_PATH = os.path.join(os.getcwd(), "enhanced_lstm_stock-model.h5")
+DATASET_PATH = os.path.join(os.getcwd(), "final_dataset.csv")
 print(MODEL_PATH)
 print(os.path.exists(MODEL_PATH))
 print(os.path.exists(DATASET_PATH))
@@ -31,7 +31,8 @@ df["Date"] = pd.to_datetime(df["Date"])
 df = df.sort_values(by="Date")
 
 # Select features for prediction
-features = ["Open", "High", "Low", "Close", "Volume"]
+features = ['Open', 'High', 'Low', 'Close', 'Volume', 'News_Sentiment', 'SMA_50', 'SMA_200', 'RSI', '%K', 'BB_Upper', 'BB_Lower', 'ATR', 'MACD', 'OBV', 'Signal']
+
 scaler = MinMaxScaler()
 df_scaled = scaler.fit_transform(df[features])
 
