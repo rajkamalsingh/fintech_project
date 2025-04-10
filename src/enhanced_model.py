@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from tensorflow.python.keras.saving.saved_model_experimental import sequential
 import sys
+import joblib
 
 if not hasattr(sys.stdout, "encoding") or sys.stdout.encoding is None:
     sys.stdout.encoding = "utf-8"
@@ -28,9 +29,12 @@ print(data.columns.get_loc('Close'))
 #print(data.head())
 #print(data.std())
 # Scale the data
-scaler = MinMaxScaler()
-scaled_data = scaler.fit_transform(data)
+#scaler = MinMaxScaler()
+#scaled_data = scaler.fit_transform(data)
+scaler_close = MinMaxScaler()
+data['Close_Scaled'] = scaler_close.fit_transform(data[['Close']])
 
+joblib.dump(scaler_close, 'scaler_close.pkl')
 x,y =[],[]
 # Preparing sequence for LSTM
 def create_sequence(data, sequence_length=60):
@@ -103,7 +107,7 @@ loss, mae = model.evaluate(x_test, y_test)
 print(f'Test loss:{loss}, Test mae: {mae}')
 
 # save the model
-model.save('enhanced_lstm_stock-model.h5')
+model.save('enhanced_lstm_stock-model')
 
 
 # model prediction and visualization
