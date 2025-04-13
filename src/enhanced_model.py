@@ -35,6 +35,12 @@ scaler_close = MinMaxScaler()
 data['Close_Scaled'] = scaler_close.fit_transform(data[['Close']])
 
 joblib.dump(scaler_close, 'scaler_close.pkl')
+
+scaler_close = joblib.load('scaler_close.pkl')
+y_pred_inv = scaler_close.inverse_transform(y_pred.reshape(-1, 1)).flatten()
+y_test_inv = scaler_close.inverse_transform(y_test.reshape(-1, 1)).flatten()
+
+
 x,y =[],[]
 # Preparing sequence for LSTM
 def create_sequence(data, sequence_length=60):
