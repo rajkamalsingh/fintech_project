@@ -9,7 +9,7 @@ df = pd.read_csv("stock_data.csv")
 #  Get today's date
 today = datetime.today().strftime("%Y-%m-%d")
 today_2 = datetime.now()
-day_number = today_2.weekday()
+day_number = today_2.weekday()-2
 print(day_number)
 if day_number in range(0,5):
     print("hello")
@@ -20,7 +20,7 @@ if day_number in range(0,5):
         config = json.load(f)
     stock_ticker = config["stock_ticker"]  # Read ticker
 
-    new_data = yf.download(stock_ticker, start=start_date,  auto_adjust=True)
+    new_data = yf.download(stock_ticker, start=today,  auto_adjust=True)
 
     # Process new data
     if not new_data.empty:
