@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 from tensorflow.python.keras.saving.saved_model_experimental import sequential
 import sys
 import joblib
+from tensorflow.keras.callbacks import EarlyStopping
 
 if not hasattr(sys.stdout, "encoding") or sys.stdout.encoding is None:
     sys.stdout.encoding = "utf-8"
@@ -25,33 +26,36 @@ data = pd.read_csv('final_dataset.csv')
 # Select relevant features
 features = ['Open', 'High', 'Low', 'Close', 'Volume', 'News_Sentiment', 'SMA_50', 'SMA_200', 'RSI', '%K', 'BB_Upper', 'BB_Lower', 'ATR', 'MACD', 'OBV', 'Signal']
 data = data[features]
-print(data.columns.get_loc('Close'))
+#print(data.columns.get_loc('Close'))
 #print(data.head())
 #print(data.std())
+# Extract features and target
+features = data.drop(columns=["Close"])
+target = data["Close"].values.reshape(-1, 1)
+
 # Scale the data
-#scaler = MinMaxScaler()
-#scaled_data = scaler.fit_transform(data)
+# Scale features
+scaler_features = MinMaxScaler()
+scaled_data = scaler_features.fit_transform(features)
+joblib.dump(scaler_features, 'scaler_features.pkl')
+
+# Scale close price separately
 scaler_close = MinMaxScaler()
-data['Close_Scaled'] = scaler_close.fit_transform(data[['Close']])
-
+target_scaled = scaler_close.fit_transform(target)
 joblib.dump(scaler_close, 'scaler_close.pkl')
-
-scaler_close = joblib.load('scaler_close.pkl')
-y_pred_inv = scaler_close.inverse_transform(y_pred.reshape(-1, 1)).flatten()
-y_test_inv = scaler_close.inverse_transform(y_test.reshape(-1, 1)).flatten()
 
 
 x,y =[],[]
 # Preparing sequence for LSTM
-def create_sequence(data, sequence_length=60):
+def create_sequence(x,y, sequence_length=120):
+    x_seq, y_seq = [], []
+    for i in range(sequence_length, len(x)):
+        x_seq.append(x[i - sequence_length:i])
+        y_seq.append(y[i])
+    return np.array(x_seq), np.array(y_seq)
 
-    for i in range (len(data)-sequence_length):
-        x.append(data[i : i + sequence_length])
-        y.append(data[i + sequence_length, 3]) #focusing on close price
-    return np.array(x), np.array(y)
-
-sequence_length =60
-x,y = create_sequence(scaled_data,sequence_length)
+sequence_length =120
+x,y = create_sequence(scaled_data,target_scaled)
 print(np.isnan(x).sum(), np.isinf(x).sum())
 print(np.isnan(y).sum(), np.isinf(y).sum())
 print("Target Std Dev:", np.std(y))
@@ -102,18 +106,20 @@ lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
 
 
 optimizer = Adam(learning_rate = lr_schedule)
-model.compile(optimizer = optimizer, loss = 'mse', metrics = ['mae'])
+model.compile(optimizer = optimizer, loss = tf.keras.losses.Huber(), metrics = ['mae'])
+early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 
 
 # Train the model
-history = model.fit(x_train, y_train, epochs=200, batch_size = 32, validation_data = (x_test,y_test), verbose=2)
+history = model.fit(x_train, y_train, epochs=100, batch_size=32,
+          validation_data=(x_test, y_test), verbose=2)
 
 # Evaluate the model
 loss, mae = model.evaluate(x_test, y_test)
 print(f'Test loss:{loss}, Test mae: {mae}')
 
 # save the model
-model.save('enhanced_lstm_stock-model')
+model.save('enhanced_lstm_stock-model.h5')
 
 
 # model prediction and visualization
@@ -123,19 +129,22 @@ y_pred = model.predict(x_test)
 #y_pred_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_pred.reshape(-1,1)), axis =1))[:,-1]
 #y_test_inv = scaler.inverse_transform(np.concatenate((x_test[:,-1,-1],y_test.reshape(-1,1)), axis =1))[:,-1]
 # Step 1: Create a dummy array with same number of features (16)
-dummy_input = np.zeros((len(y_pred), scaler.data_min_.shape[0]))  # shape (253, 16)
+#dummy_input = np.zeros((len(y_pred), scaler.data_min_.shape[0]))  # shape (253, 16)
 
 # Step 2: Insert the predicted values into the column corresponding to 'close' price (e.g., column index 5 if it's 6th)
 # Replace 5 with the actual index of 'close' used during feature scaling
-dummy_input[:, 3] = y_pred.reshape(-1)
+#dummy_input[:, 3] = y_pred.reshape(-1)
 
 # Step 3: Inverse transform and extract the predicted 'close' price
-y_pred_inv = scaler.inverse_transform(dummy_input)[:, 3]
+#y_pred_inv = scaler.inverse_transform(dummy_input)[:, 3]
 
 # Similarly for y_test
-dummy_input[:, 3] = y_test.reshape(-1)
-y_test_inv = scaler.inverse_transform(dummy_input)[:, 3]
+#dummy_input[:, 3] = y_test.reshape(-1)
+#y_test_inv = scaler.inverse_transform(dummy_input)[:, 3]
+scaler_close = joblib.load('scaler_close.pkl')
 
+y_pred_inv = scaler_close.inverse_transform(y_pred)
+y_test_inv = scaler_close.inverse_transform(y_test)
 
 # Plot predictions v/s actual price
 plt.figure(figsize=(12,6))
