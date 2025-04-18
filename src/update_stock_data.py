@@ -13,14 +13,14 @@ day_number = today_2.weekday()
 print(day_number)
 if day_number in range(0,5):
     print("hello")
-    start_date = "2025-04-05"
+    start_date = "2025-04-12"
     #  Fetch latest stock data
     # Load stock ticker from config file
     with open("config.json", "r") as f:
         config = json.load(f)
     stock_ticker = config["stock_ticker"]  # Read ticker
-
-    new_data = yf.download(stock_ticker, start=today,  auto_adjust=True)
+    print(today)
+    new_data = yf.download(stock_ticker, start=start_date,  auto_adjust=True)
 
     # Process new data
     if not new_data.empty:
