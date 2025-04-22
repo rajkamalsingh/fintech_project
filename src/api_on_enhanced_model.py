@@ -41,7 +41,7 @@ def predict():
     predicted_scaled = model.predict(x_input)
     predicted_price = scaler_close.inverse_transform(predicted_scaled)[0][0]
 
-    return {"predicted_close_price": round(predicted_price, 2)}
+    return {"predicted_close_price": float(predicted_price, 2)}
 
 # Run with: uvicorn api_on_enhanced_model:app --reload
 if __name__ == "__main__":

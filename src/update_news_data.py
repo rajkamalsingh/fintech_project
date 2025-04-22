@@ -21,11 +21,11 @@ stock_ticker = config["stock_ticker"]  # Read ticker
 def get_news_data():
     # api_key = os.getenv("NEWS_API_KEY")
     api_key = '994bde3408734b91b5a38e18bc6ab41a'
-    print(api_key)
+    #print(api_key)
     url = 'https://newsapi.org/v2/everything'
     params = {
         'q': "Apple",
-        'from': (datetime.now() - timedelta(days=20)).strftime('%y-%m-%d'),  # get articles from today
+        'from': today,  # get articles from today
         'sortBy': 'relevancy',
         'apiKey': api_key,
         'pageSize': 100,  # maximum number of results per page
