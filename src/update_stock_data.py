@@ -9,11 +9,11 @@ df = pd.read_csv("stock_data.csv")
 #  Get today's date
 today = datetime.today().strftime("%Y-%m-%d")
 today_2 = datetime.now()
-day_number = today_2.weekday()-2
+day_number = today_2.weekday()
 print(day_number)
 if day_number in range(0,5):
     print("hello")
-    start_date = "2025-04-19"
+    start_date = "2025-04-24"
     #  Fetch latest stock data
     # Load stock ticker from config file
     with open("config.json", "r") as f:
